@@ -31,7 +31,7 @@ export class PropertyFeature {
   hasGardenYard: boolean;
 
   @Column()
-  hasColumn: boolean;
+  hasBalcony: boolean;
 
   @OneToOne(() => Property, (property) => property.PropertyFeature)
   @JoinColumn()

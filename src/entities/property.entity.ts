@@ -1,5 +1,12 @@
-import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { PropertyFeature } from './propertyFeature.entity';
+import { User } from './User.entity';
 
 @Entity()
 export class Property {
@@ -15,4 +22,7 @@ export class Property {
     { cascade: true },
   )
   PropertyFeature: PropertyFeature;
+
+  @ManyToOne(() => User, (user) => user.properties)
+  user: User;
 }
