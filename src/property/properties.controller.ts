@@ -1,17 +1,7 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Param,
-  Body,
-  Patch,
-  UsePipes,
-} from '@nestjs/common';
+import { Controller, Get, Post, Param, Body, Patch } from '@nestjs/common';
 import { CreatePropertyDto } from './Dto/CreateProperty.dto';
 import { IdDto } from './Dto/IdType.Dto';
 import { ParseIdPipe } from './pipe/parseInt.Id';
-import { ZodPipeValidation } from './pipe/ZodPipe';
-import { ZodCreateSchema, type ZodCreateType } from './Dto/CreateZod.Dto';
 import { PropertyService } from './property.service';
 
 @Controller('property')
@@ -35,12 +25,12 @@ export class PropertyController {
 
   @Get()
   getProperties() {
-    return this.PropertyService.getProperties(this.properties);
+    return this.PropertyService.getProperties();
   }
 
   @Get(':id')
   getProperty(@Param('id', ParseIdPipe) id: number) {
-    return this.PropertyService.getProperty(this.properties, id);
+    return this.PropertyService.getProperty(id);
   }
 
   @Post()
@@ -48,22 +38,16 @@ export class PropertyController {
     @Body()
     Body: CreatePropertyDto,
   ) {
-    return this.PropertyService.createProperty(this.properties, Body);
+    return this.PropertyService.createProperty(Body);
   }
 
-  @Patch()
-  @UsePipes(new ZodPipeValidation(ZodCreateSchema))
+  @Patch(':id')
   updateProperty(
     @Body()
-    Body: ZodCreateType,
+    Body: CreatePropertyDto,
     @Param()
     { id }: IdDto,
   ) {
-    const property = this.properties.find((p) => p.id === id);
-    if (property) {
-      property.name = Body.name;
-      return property;
-    }
-    return { message: 'Property not found' };
+    return this.PropertyService.updateProperty(Body, id);
   }
 }
