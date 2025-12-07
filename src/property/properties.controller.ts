@@ -14,21 +14,6 @@ import { PropertyService } from './property.service';
 
 @Controller('property')
 export class PropertyController {
-  private properties = [
-    {
-      id: 1,
-      name: 'Property 1',
-    },
-    {
-      id: 2,
-      name: 'Property 2',
-    },
-    {
-      id: 3,
-      name: 'Property 3',
-    },
-  ];
-
   constructor(private PropertyService: PropertyService) {}
 
   @Get()
