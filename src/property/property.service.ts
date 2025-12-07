@@ -3,14 +3,19 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Property } from 'src/entities/property.entity';
 import { Repository } from 'typeorm';
 import { CreatePropertyDto } from './Dto/CreateProperty.dto';
+import { PagginationDTO } from './Dto/Paggination.dto';
+import { DEFAULT_PAGE_SIZE } from 'src/utils/constants';
 
 @Injectable()
 export class PropertyService {
   constructor(
     @InjectRepository(Property) private PropertyRepo: Repository<Property>,
   ) {}
-  async getProperties() {
-    return await this.PropertyRepo.find();
+  async getProperties(paginationDTO: PagginationDTO) {
+    return await this.PropertyRepo.find({
+      skip: paginationDTO.skip,
+      take: paginationDTO.limit ?? DEFAULT_PAGE_SIZE,
+    });
   }
 
   async getProperty(id: number) {

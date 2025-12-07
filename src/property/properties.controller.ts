@@ -6,19 +6,21 @@ import {
   Body,
   Patch,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { CreatePropertyDto } from './Dto/CreateProperty.dto';
 import { IdDto } from './Dto/IdType.Dto';
 import { ParseIdPipe } from './pipe/parseInt.Id';
 import { PropertyService } from './property.service';
+import { PagginationDTO } from './Dto/Paggination.dto';
 
 @Controller('property')
 export class PropertyController {
   constructor(private PropertyService: PropertyService) {}
 
   @Get()
-  getProperties() {
-    return this.PropertyService.getProperties();
+  getProperties(@Query() paginationDTO: PagginationDTO) {
+    return this.PropertyService.getProperties(paginationDTO);
   }
 
   @Get(':id')
