@@ -1,6 +1,7 @@
 import {
   Column,
   Entity,
+  JoinColumn,
   ManyToOne,
   OneToOne,
   PrimaryGeneratedColumn,
@@ -24,5 +25,6 @@ export class Property {
   PropertyFeature: PropertyFeature;
 
   @ManyToOne(() => User, (user) => user.properties)
+  @JoinColumn({ name: 'ownerID' })
   user: User;
 }
