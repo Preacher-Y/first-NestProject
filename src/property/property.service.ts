@@ -28,8 +28,20 @@ export class PropertyService {
   }
 
   async updateProperty(dto: CreatePropertyDto, id: number) {
+    const data = await this.PropertyRepo.findOne({ where: { id } });
+    if (!data) throw new NotFoundException();
+
     const { affected } = await this.PropertyRepo.update({ id }, dto);
     if (affected) return 'Updated Successfully';
     return 'Failed to Update';
+  }
+
+  async deleteProperty(id: number) {
+    const data = await this.PropertyRepo.findOne({ where: { id } });
+    if (!data) throw new NotFoundException();
+
+    const { affected } = await this.PropertyRepo.delete({ id });
+    if (affected) return 'Deleted Successfully';
+    return 'Failed to Delete';
   }
 }
