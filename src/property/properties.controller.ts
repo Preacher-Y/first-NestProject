@@ -7,13 +7,16 @@ import {
   Patch,
   Delete,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { CreatePropertyDto } from './Dto/CreateProperty.dto';
 import { IdDto } from './Dto/IdType.Dto';
 import { ParseIdPipe } from './pipe/parseInt.Id';
 import { PropertyService } from './property.service';
 import { PagginationDTO } from './Dto/Paggination.dto';
+import { JwtGuard } from 'src/auth/jwt.guard';
 
+@UseGuards(JwtGuard)
 @Controller('property')
 export class PropertyController {
   constructor(private PropertyService: PropertyService) {}
