@@ -12,7 +12,7 @@ import { UserService } from './user.service';
 import { CreateUserDto } from './dto/createUser.dto';
 import { UpdateUserDto } from './dto/updateUser.dto';
 import { JwtGuard } from 'src/auth/jwt.guard';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('User EndPoint')
 @Controller('auth')
@@ -24,6 +24,7 @@ export class UserController {
     return this.UserService.create(CreateUserDto);
   }
   @UseGuards(JwtGuard)
+  @ApiBearerAuth()
   @Get()
   findAll() {
     return this.UserService.findAll();
@@ -34,6 +35,7 @@ export class UserController {
     return this.UserService.findOne(email);
   }
 
+  @ApiBearerAuth()
   @UseGuards(JwtGuard)
   @Patch(':id')
   update(
@@ -43,7 +45,7 @@ export class UserController {
   ) {
     return this.UserService.update(+id, UpdateUserDto);
   }
-
+  @ApiBearerAuth()
   @UseGuards(JwtGuard)
   @Delete(':id')
   remove(@Param('id') id: string) {

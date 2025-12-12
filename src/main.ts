@@ -9,6 +9,7 @@ async function bootstrap() {
     .setTitle('Property Management')
     .setDescription('API Documentation for the Property Management Info')
     .setVersion('1.0.0')
+    .addBearerAuth()
     .build();
   // Creating swagger document
   const document = SwaggerModule.createDocument(app, config);
