@@ -7,6 +7,7 @@ import { ConfigModule } from '@nestjs/config';
 import { UserModule } from './User/user.module';
 import DbConfig from './config/DbConfig';
 import { AuthModule } from './auth/auth.module';
+import { PropertyFeatureModule } from './property-feature/property-feature.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { AuthModule } from './auth/auth.module';
     }),
     UserModule,
     AuthModule,
+    PropertyFeatureModule,
   ],
   controllers: [AppController],
   providers: [AppService],
