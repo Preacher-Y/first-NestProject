@@ -20,7 +20,7 @@ export class AppController {
   }
   @ApiBearerAuth()
   @UseGuards(JwtGuard)
-  @Get()
+  @Get('home')
   getHello(@Request() req: { user: UpdateUserDto }): string {
     return this.appService.getHello(req);
   }

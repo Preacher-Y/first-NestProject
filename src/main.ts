@@ -14,7 +14,7 @@ async function bootstrap() {
   // Creating swagger document
   const document = SwaggerModule.createDocument(app, config);
   // Setting up the server
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup('', app, document);
 
   await app.listen(process.env.PORT ?? 3000);
 }
