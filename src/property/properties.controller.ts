@@ -15,7 +15,9 @@ import { ParseIdPipe } from './pipe/parseInt.Id';
 import { PropertyService } from './property.service';
 import { PagginationDTO } from './Dto/Paggination.dto';
 import { JwtGuard } from 'src/auth/jwt.guard';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Property EndPoint')
 @UseGuards(JwtGuard)
 @Controller('property')
 export class PropertyController {

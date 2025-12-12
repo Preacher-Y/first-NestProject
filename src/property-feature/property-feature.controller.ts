@@ -10,7 +10,9 @@ import {
 import { PropertyFeatureService } from './property-feature.service';
 import { CreatePropertyFeatureDto } from './dto/create-property-feature.dto';
 import { UpdatePropertyFeatureDto } from './dto/update-property-feature.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Property Feature EndPoint')
 @Controller('property-feature')
 export class PropertyFeatureController {
   constructor(
