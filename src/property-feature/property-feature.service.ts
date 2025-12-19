@@ -1,4 +1,8 @@
-import { HttpException, Injectable } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
 import { CreatePropertyFeatureDto } from './dto/create-property-feature.dto';
 import { UpdatePropertyFeatureDto } from './dto/update-property-feature.dto';
 import { PropertyFeature } from 'src/entities/propertyFeature.entity';
@@ -21,7 +25,8 @@ export class PropertyFeatureService {
     const property = await this.propertyRepo.findOne({
       where: { id: propertyId },
     });
-    if (!property) throw new Error('Property not found');
+    if (!property)
+      throw new NotFoundException(`Property with id ${propertyId} not found`);
 
     const propertyFeature = this.properfeatureRepo.create({
       ...createPropertyFeatureDto,
@@ -36,7 +41,10 @@ export class PropertyFeatureService {
   }
 
   async findOne(id: number) {
-    return await this.properfeatureRepo.findOne({ where: { id } });
+    const feature = await this.properfeatureRepo.findOne({ where: { id } });
+    if (!feature)
+      throw new NotFoundException(`Property feature ${id} not found`);
+    return feature;
   }
 
   async update(id: number, updatePropertyFeatureDto: UpdatePropertyFeatureDto) {
@@ -45,12 +53,12 @@ export class PropertyFeatureService {
       updatePropertyFeatureDto,
     );
     if (affected) return { message: 'Updated Successfully' };
-    throw new HttpException('Failed to Update', 400);
+    throw new BadRequestException('Failed to update property feature');
   }
 
   async remove(id: number) {
     const { affected } = await this.properfeatureRepo.delete({ id });
     if (affected) return { message: 'Deleted Successfully' };
-    throw new HttpException('Failed to Delete', 400);
+    throw new BadRequestException('Failed to delete property feature');
   }
 }

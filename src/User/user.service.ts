@@ -1,4 +1,8 @@
-import { HttpException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
 import { CreateUserDto } from './dto/createUser.dto';
 import { UpdateUserDto } from './dto/updateUser.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -14,7 +18,7 @@ export class UserService {
         email: CreateUserDto.email,
       },
     });
-    if (exist) throw new HttpException('The User already Exists', 400);
+    if (exist) throw new BadRequestException('The user already exists');
     return await this.UserRepo.save(CreateUserDto);
   }
 
@@ -30,7 +34,7 @@ export class UserService {
         email,
       },
     });
-    if (!user) throw new NotFoundException();
+    if (!user) throw new NotFoundException('User not found');
     return user;
   }
 
@@ -44,7 +48,7 @@ export class UserService {
 
     const { affected } = await this.UserRepo.update({ id }, UpdateUserDto);
     if (affected) return { message: 'Updated Successfully' };
-    throw new HttpException('Failed to Update', 400);
+    throw new BadRequestException('Failed to update user');
   }
 
   async remove(id: number) {
@@ -57,6 +61,6 @@ export class UserService {
 
     const { affected } = await this.UserRepo.delete({ id });
     if (affected) return { message: 'Deleted Successfully' };
-    throw new HttpException('Failed to Delete', 400);
+    throw new BadRequestException('Failed to delete user');
   }
 }

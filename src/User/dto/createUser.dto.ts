@@ -4,16 +4,19 @@ import { IsEmail, IsString, IsStrongPassword, Length } from 'class-validator';
 export class CreateUserDto {
   @IsString()
   @Length(3, 30)
-  @ApiProperty()
+  @ApiProperty({ description: 'Given name', example: 'John' })
   firstName: string;
   @IsString()
   @Length(3, 30)
-  @ApiProperty()
+  @ApiProperty({ description: 'Family name', example: 'Doe' })
   lastName: string;
 
   @IsString()
   @IsEmail()
-  @ApiProperty()
+  @ApiProperty({
+    description: 'User email (unique)',
+    example: 'john@example.com',
+  })
   email: string;
 
   @IsStrongPassword({
@@ -23,6 +26,6 @@ export class CreateUserDto {
     minNumbers: 1,
     minSymbols: 1,
   })
-  @ApiProperty()
+  @ApiProperty({ description: 'Strong password', example: 'P@ssw0rd!' })
   password: string;
 }

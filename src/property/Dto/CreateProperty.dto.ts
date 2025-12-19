@@ -3,6 +3,9 @@ import { IsString } from 'class-validator';
 
 export class CreatePropertyDto {
   @IsString()
-  @ApiProperty()
+  @ApiProperty({
+    description: 'Property name/title',
+    example: 'Ocean View Apartment',
+  })
   name: string;
 }

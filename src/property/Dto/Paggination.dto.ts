@@ -5,12 +5,20 @@ export class PagginationDTO {
   @IsNumber()
   @IsPositive()
   @IsOptional()
-  @ApiProperty()
+  @ApiProperty({
+    description: 'Number of records to skip',
+    example: 0,
+    required: false,
+  })
   skip: number;
 
   @IsNumber()
   @IsPositive()
   @IsOptional()
-  @ApiProperty()
+  @ApiProperty({
+    description: 'Maximum number of records to return',
+    example: 10,
+    required: false,
+  })
   limit: number;
 }

@@ -1,4 +1,4 @@
-import { Injectable, HttpException } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UpdateUserDto } from 'src/User/dto/updateUser.dto';
 import { UserService } from 'src/User/user.service';
@@ -13,7 +13,7 @@ export class AuthService {
   async validateUser(email: string, passwordGiv: string) {
     const user = await this.userService.findOne(email);
     if (user && user.password !== passwordGiv)
-      throw new HttpException('Invalid Credential', 401);
+      throw new UnauthorizedException('Invalid credentials');
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password, ...rest } = user;
